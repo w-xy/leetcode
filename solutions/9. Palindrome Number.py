@@ -22,6 +22,9 @@ class Solution:
         """
         if x < 0:
             return False
+        if x != 0 and x % 10 == 0:
+            return False
+        rev = 0
         while rev < x:
             rev = rev*10 + x%10
             x //= 10
