@@ -32,15 +32,15 @@ class Solution:
         :type nums: List[int]
         :rtype: int
         """
-        tail = len(nums)
-        for k, v in enumerate(nums):
-            cnt = 0
-            while k+cnt+1 < tail and nums[k+cnt+1] == v:
-                cnt += 1
-            if cnt == 0:
-                continue
-            head = k+cnt+1
-            for i in range(head, tail):
-                nums[i-cnt], nums[i] = nums[i], nums[i-cnt]
-            tail -= cnt
-        return tail
+        if len(nums) <= 1:
+            return len(nums)
+        fast = 1
+        slow = 0
+        while fast < len(nums):
+            if nums[fast] == nums[slow]:
+                fast += 1
+            else:
+                slow += 1
+                nums[slow] = nums[fast]
+                fast += 1
+        return slow+1
