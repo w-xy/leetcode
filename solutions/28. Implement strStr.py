@@ -20,8 +20,64 @@ class Solution:
         """
         if needle == '':
             return 0
-        needle_len = len(needle)
-        for idx in range(len(haystack)-needle_len+1):
-            if needle == haystack[idx:idx+needle_len]:
-                return idx
+        head = 0
+        tail = len(needle)
+        while tail <= len(haystack):
+            if needle == haystack[head:tail]:
+                return head
+            head += 1
+            tail += 1
         return -1
+
+    def issame(self, haystack, needle, head, tail):
+        phaystack = head
+        pneedle = 0
+        while phaystack < tail:
+            if needle[pneedle] != haystack[phaystack]:
+                return False
+            phaystack += 1
+            pneedle += 1
+        return True
+    def strStrSelfCmp(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        if needle == '':
+            return 0
+        head = 0
+        tail = len(needle)
+        while tail <= len(haystack):
+            if self.issame(haystack, needle, head, tail):
+                return head
+            head += 1
+            tail += 1
+        return -1
+
+def issame(self, haystack, needle, head, tail):
+    phaystack = head
+    pneedle = 0
+    while phaystack < tail:
+        if needle[pneedle] != haystack[phaystack]:
+            return head+1, tail+1
+        phaystack += 1
+        pneedle += 1
+    return True
+def strStrKMP(self, haystack, needle):
+    """
+    :type haystack: str
+    :type needle: str
+    :rtype: int
+    """
+    if needle == '':
+        return 0
+    head = 0
+    tail = len(needle)
+    while tail <= len(haystack):
+        ret = self.issame(haystack, needle, head, tail)
+        if ret == True:
+            return head
+        else:
+            head,tail = ret
+    return -1
