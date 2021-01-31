@@ -56,16 +56,16 @@ void myLinkedListAddAtTail(MyLinkedList* obj, int val) {
 /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
 void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
     MyLinkedList *ptr = obj;
-    MyLinkedList *next;
+    MyLinkedList *next = ptr->next;
     int cnt;
     for(cnt = 0; cnt < index; ++cnt)
     {
-        next = ptr->next;
         if(next == NULL)
         {
             return;
         }
         ptr = next;
+        next = ptr->next;
     }
 
     ptr->next = myLinkedListCreate();
@@ -77,11 +77,37 @@ void myLinkedListAddAtIndex(MyLinkedList* obj, int index, int val) {
 
 /** Delete the index-th node in the linked list, if the index is valid. */
 void myLinkedListDeleteAtIndex(MyLinkedList* obj, int index) {
-
+    MyLinkedList *ptr = obj;
+    MyLinkedList *next = obj->next;
+    int cnt;
+    for(cnt = 0; cnt < index; ++cnt)
+    {
+        if(next == NULL)
+        {
+            return;
+        }
+        ptr = next;
+        next = ptr->next;
+    }
+    if(next == NULL)
+    {
+        return;
+    }
+    ptr->next = next->next;
+    free(next);
+    return;
 }
 
 void myLinkedListFree(MyLinkedList* obj) {
-
+    MyLinkedList *ptr = obj;
+    MyLinkedList *next;
+    while(ptr)
+    {
+        next = ptr->next;
+        free(ptr);
+        ptr = next;
+    }
+    return;
 }
 
 /**
@@ -99,3 +125,15 @@ void myLinkedListFree(MyLinkedList* obj) {
  
  * myLinkedListFree(obj);
 */
+
+int main()
+{
+    MyLinkedList *obj = myLinkedListCreate();
+    myLinkedListAddAtHead(obj, 1);
+    myLinkedListAddAtTail(obj, 3);
+    myLinkedListAddAtIndex(obj, 1, 2);
+    int a = myLinkedListGet(obj, 1);
+    myLinkedListDeleteAtIndex(obj, 1);
+    int b = myLinkedListGet(obj, 1);
+    printf("%d %d\n", a, b);
+}
