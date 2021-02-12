@@ -16,15 +16,15 @@ MyLinkedList* myLinkedListCreate() {
 
 /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
 int myLinkedListGet(MyLinkedList* obj, int index) {
-    MyLinkedList *ptr = obj->next;
+    MyLinkedList *ptr = obj;
     int cnt;
-    for(cnt = 0; cnt < index; ++cnt)
+    for(cnt = 0; cnt <= index; ++cnt)
     {
+        ptr = ptr->next;
         if(ptr == NULL)
         {
             return -1;
         }
-        ptr = ptr->next;
     }
     return ptr->val;
 }
@@ -33,8 +33,8 @@ int myLinkedListGet(MyLinkedList* obj, int index) {
 void myLinkedListAddAtHead(MyLinkedList* obj, int val) {
     MyLinkedList *new = myLinkedListCreate();
     new->next = obj->next;
+    new->val = val;
     obj->next = new;
-    obj->val = val;
     return;
 }
 
@@ -110,6 +110,18 @@ void myLinkedListFree(MyLinkedList* obj) {
     return;
 }
 
+void myLinkedListPrint(MyLinkedList* obj)
+{
+    MyLinkedList *ptr = obj->next;
+    while(ptr)
+    {
+        printf(" -> %d", ptr->val);
+        ptr = ptr->next;
+    }
+    printf("\n");
+    return;
+}
+
 /**
  * Your MyLinkedList struct will be instantiated and called as such:
  * MyLinkedList* obj = myLinkedListCreate();
@@ -129,6 +141,18 @@ void myLinkedListFree(MyLinkedList* obj) {
 int main()
 {
     MyLinkedList *obj = myLinkedListCreate();
+    // myLinkedListAddAtHead(obj, 4);
+    // myLinkedListGet(obj, 1);
+    // myLinkedListAddAtHead(obj, 1);
+    // myLinkedListAddAtHead(obj, 5);
+    // myLinkedListDeleteAtIndex(obj, 3);
+    // myLinkedListAddAtHead(obj, 7);
+    // myLinkedListGet(obj, 3);
+    // myLinkedListGet(obj, 3);
+    // myLinkedListGet(obj, 3);
+    // myLinkedListAddAtHead(obj, 1);
+    // myLinkedListDeleteAtIndex(obj, 4);
+
     myLinkedListAddAtHead(obj, 1);
     myLinkedListAddAtTail(obj, 3);
     myLinkedListAddAtIndex(obj, 1, 2);
@@ -136,4 +160,7 @@ int main()
     myLinkedListDeleteAtIndex(obj, 1);
     int b = myLinkedListGet(obj, 1);
     printf("%d %d\n", a, b);
+
+
+    return 0;
 }
