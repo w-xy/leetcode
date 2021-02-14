@@ -11,6 +11,9 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # ARG KEY
 # ARG PUB_KEY
 
+# RUN apk add --no-cache openssh-client git
+# RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
+
 # RUN mkdir /home/vscode/.ssh/
 # RUN chmod 700 /home/vscode/.ssh/
 # RUN ssh-keyscan github.com >> /home/vscode/.ssh/known_hosts
